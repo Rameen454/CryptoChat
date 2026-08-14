@@ -2,13 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 
 const FASTAPI_URL = process.env.FASTAPI_URL;
 
+// DELETE /api/conversations/{id}/messages/{messageId} -> delete one message
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string; messageId: string }> }
 ) {
-  const { id } = await params;
+  const { id, messageId } = await params;
   const authHeader = request.headers.get("Authorization") ?? "";
-  const res = await fetch(`${FASTAPI_URL}/conversations/${id}`, {
+  const res = await fetch(`${FASTAPI_URL}/conversations/${id}/messages/${messageId}`, {
     method: "DELETE",
     headers: { Authorization: authHeader },
   });
